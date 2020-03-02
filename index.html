@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>近代物理实验汇总表格链接</title>
+</head>
+<body>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+        ul{
+            list-style: none;
+        }
+        #app{
+            width:90%;
+            margin:0 auto;
+            text-align: center;
+        }
+    </style>
+    <div id="app">
+        <h1>近代物理实验汇总表格链接</h1>
+        <ul class="doc">
+            <li class="doc-item" v-for="doc in docs">
+                <h3>
+                    {{doc.time}}
+                </h3>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-secondary" v-for="item in doc.tables">
+                        <a :href="item.url">
+                            {{item.name}}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+        {
+            let vm=new Vue({
+                el:"#app",
+                data:{
+                    docs:"jindaiwuli"
+                },
+                created:function(){
+                    fetch('/data.json')
+                    .then(res=>res.json())
+                    .then(res=>{
+                        this.docs=res
+                    })
+                }
+            })
+        }
+    </script>
+</body>
+</html>
